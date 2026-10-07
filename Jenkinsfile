@@ -39,13 +39,30 @@ pipeline {
                 echo 'Build successful!'
             }
         }
-
         stage('Deploy') {
-            steps {
-                echo 'Deploy stage started...'
-                echo 'Website will be deployed to Vercel.'
-            }
+    steps {
+        withCredentials([
+            string(
+                credentialsId: 'vercel-token',
+                variable: 'VERCEL_TOKEN'
+            )
+        ]) {
+            sh '''
+                echo "Installing Vercel CLI..."
+                npm install -g vercel
+
+                echo "Vercel CLI version:"
+                vercel --version
+
+                echo "Deploying to Vercel..."
+
+                vercel deploy --prod \
+                    --token "$VERCEL_TOKEN" \
+                    --yes
+            '''
         }
+    }
+}
     }
 
     post {
