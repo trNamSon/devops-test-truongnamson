@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo 'Checking website files...'
 
-                bat 'if not exist index.html exit 1'
+                sh 'test -f index.html'
 
                 echo 'Build successful!'
             }
