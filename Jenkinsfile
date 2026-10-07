@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'NodeJS-22'
+    }
+
     environment {
         PROJECT_NAME = 'devops-test'
         BRANCH_NAME = 'main'
@@ -20,6 +24,9 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 echo 'Static HTML project - no dependencies required.'
+
+                sh 'node --version'
+                sh 'npm --version'
             }
         }
 
