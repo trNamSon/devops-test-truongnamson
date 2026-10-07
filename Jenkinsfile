@@ -38,17 +38,35 @@ pipeline {
 
                 echo 'Build successful!'
             }
-        }
-        stage('Deploy') {
+stage('Deploy') {
     steps {
         withCredentials([
             string(
                 credentialsId: 'vercel-token',
                 variable: 'VERCEL_TOKEN'
+            ),
+            string(
+                credentialsId: 'telegram-token',
+                variable: 'TELEGRAM_TOKEN'
+            ),
+            string(
+                credentialsId: 'telegram-chat-id',
+                variable: 'TELEGRAM_CHAT_ID'
             )
         ]) {
+
             sh '''
+                echo "Sending DEPLOY STARTED notification..."
+
+                curl -sS -X POST \
+                    "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+                    --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+                    --data-urlencode "text=🚀 DEPLOY STARTED
+Project: devops-test
+Branch: main"
+
                 echo "Installing Vercel CLI..."
+
                 npm install -g vercel
 
                 echo "Vercel CLI version:"
