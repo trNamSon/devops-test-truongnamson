@@ -38,6 +38,7 @@ pipeline {
 
                 echo 'Build successful!'
             }
+        }
 stage('Deploy') {
     steps {
         withCredentials([
