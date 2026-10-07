@@ -20,3 +20,7 @@ Developer → GitHub → Jenkins → Build → Deploy → Vercel → Telegram
 
 Trương Nam Sơn
 ST23A
+
+git add Jenkinsfile
+git commit -m "Add Telegram deploy notification"
+git push origin main
